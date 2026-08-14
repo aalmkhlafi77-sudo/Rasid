@@ -16,6 +16,18 @@ export function formatNumber(value, decimalsMode = 'auto') {
   });
 }
 
+
+export function resetCurrentCalculation(state) {
+  return {
+    ...state,
+    expression: '',
+    currentValue: 0,
+    currentLabel: null,
+    groupState: null,
+    historyNavigationSuppressed: true
+  };
+}
+
 export class UndoManager {
   constructor(limit = 50) {
     this.limit = limit;
