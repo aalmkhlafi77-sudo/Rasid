@@ -1,14 +1,14 @@
-const CACHE_NAME = 'rasid-calculator-v2';
+const CACHE_NAME = 'rasid-calculator-v3';
 const ASSETS = [
   './',
   './index.html',
   './styles.css',
-  './src/app.js',
-  './src/calculator.js',
-  './src/results.js',
-  './src/session.js',
+  './app.js',
+  './calculator.js',
+  './results.js',
+  './session.js',
   './manifest.webmanifest',
-  './icons/icon.svg'
+  './icon.svg'
 ];
 
 self.addEventListener('install', (event) => {

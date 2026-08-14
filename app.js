@@ -1,6 +1,6 @@
 import { evaluateExpression } from './calculator.js';
 import { ResultStore, calculateGroup } from './results.js';
-import { formatNumber, UndoManager } from './session.js';
+import { formatNumber, resetCurrentCalculation, UndoManager } from './session.js';
 
 const $ = (id) => document.getElementById(id);
 const store = new ResultStore();
@@ -171,8 +171,16 @@ function appendToken(token, soundKind = null) {
 }
 
 function clearExpression() {
-  if (!expression) return;
-  checkpoint(); expression = ''; currentLabel = null; groupState = null; showError(''); renderAll();
+  if (!expression && currentValue === 0 && currentLabel === null && groupState === null) return;
+  checkpoint();
+  const cleared = resetCurrentCalculation({ expression, currentValue, currentLabel, groupState, historyNavigationSuppressed });
+  expression = cleared.expression;
+  currentValue = cleared.currentValue;
+  currentLabel = cleared.currentLabel;
+  groupState = cleared.groupState;
+  historyNavigationSuppressed = cleared.historyNavigationSuppressed;
+  showError('');
+  renderAll();
 }
 
 function backspace() {
@@ -269,7 +277,19 @@ document.querySelectorAll('[data-group-op]').forEach((button) => button.addEvent
 $('useGroupResult').addEventListener('click', useGroupResult);
 $('copyResult').addEventListener('click', () => copyValue());
 $('pasteValue').addEventListener('click', pasteNumber);
-$('newOperation').addEventListener('click', () => { checkpoint(); expression = ''; currentLabel = null; groupState = null; historyNavigationSuppressed = true; store.clearSelection(); showError(''); renderAll(); });
+$('clearDisplay').addEventListener('click', clearExpression);
+$('newOperation').addEventListener('click', () => {
+  checkpoint();
+  const cleared = resetCurrentCalculation({ expression, currentValue, currentLabel, groupState, historyNavigationSuppressed });
+  expression = cleared.expression;
+  currentValue = cleared.currentValue;
+  currentLabel = cleared.currentLabel;
+  groupState = cleared.groupState;
+  historyNavigationSuppressed = cleared.historyNavigationSuppressed;
+  store.clearSelection();
+  showError('');
+  renderAll();
+});
 $('clearHistory').addEventListener('click', () => { if (!history.length) return; checkpoint(); history = []; renderHistory(); });
 $('historyUp').addEventListener('click', () => $('historyList').scrollBy({ top: -150, behavior: 'smooth' }));
 $('historyDown').addEventListener('click', () => $('historyList').scrollBy({ top: 150, behavior: 'smooth' }));
