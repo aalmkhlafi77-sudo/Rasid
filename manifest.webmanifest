@@ -1,0 +1,20 @@
+{
+  "name": "راصد",
+  "short_name": "راصد",
+  "description": "راصد - آلة حاسبة ذكية بنتائج متتابعة وعمليات جماعية قابلة لإعادة الاستخدام",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#07101e",
+  "theme_color": "#09111f",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

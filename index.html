@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09111f">
+  <title>راصد</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+    <header class="topbar">
+      <div class="brand-block">
+        <div class="brand-mark" aria-hidden="true">ر</div>
+        <div>
+          <h1>راصد</h1>
+          <p>تصميم / عبدالله المخلافي 2026</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="ghost-btn" id="detailsToggle" type="button" aria-label="&#1573;&#1592;&#1607;&#1575;&#1585; &#1571;&#1608; &#1573;&#1582;&#1601;&#1575;&#1569; &#1575;&#1604;&#1578;&#1601;&#1575;&#1589;&#1610;&#1604;">&#1573;&#1582;&#1601;&#1575;&#1569; &#1575;&#1604;&#1578;&#1601;&#1575;&#1589;&#1610;&#1604;</button>
+        <button class="icon-btn" id="muteToggle" type="button" aria-label="&#1603;&#1578;&#1605; &#1575;&#1604;&#1589;&#1608;&#1578;">&#128266;</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="panel results-panel details-panel" aria-label="&#1604;&#1608;&#1581;&#1577; &#1575;&#1604;&#1606;&#1578;&#1575;&#1574;&#1580;">
+        <div class="panel-heading">
+          <div>
+            <h2>&#1575;&#1604;&#1606;&#1578;&#1575;&#1574;&#1580;</h2>
+            <span id="resultsCount">0</span>
+          </div>
+          <div class="mini-actions">
+            <button id="selectAll" type="button">&#1578;&#1581;&#1583;&#1610;&#1583; &#1575;&#1604;&#1603;&#1604;</button>
+            <button id="clearSelection" type="button">&#1573;&#1604;&#1594;&#1575;&#1569;</button>
+          </div>
+        </div>
+        <div class="results-list" id="resultsList"></div>
+
+        <section class="group-panel" id="groupPanel">
+          <div class="section-title">
+            <h3>&#1575;&#1604;&#1593;&#1605;&#1604;&#1610;&#1575;&#1578; &#1575;&#1604;&#1580;&#1605;&#1575;&#1593;&#1610;&#1577;</h3>
+            <span id="selectedCount">0</span>
+          </div>
+          <div class="selected-chips" id="selectedChips"></div>
+          <div class="group-total-row">
+            <span>&#1575;&#1604;&#1573;&#1580;&#1605;&#1575;&#1604;&#1610;</span>
+            <strong id="groupTotal">0</strong>
+          </div>
+          <div class="group-buttons" role="group" aria-label="&#1593;&#1605;&#1604;&#1610;&#1575;&#1578; &#1593;&#1604;&#1609; &#1575;&#1604;&#1606;&#1578;&#1575;&#1574;&#1580; &#1575;&#1604;&#1605;&#1581;&#1583;&#1583;&#1577;">
+            <button type="button" data-group-op="add">&#1580;&#1605;&#1593;</button>
+            <button type="button" data-group-op="subtract">&#1591;&#1585;&#1581;</button>
+            <button type="button" data-group-op="multiply">&#1590;&#1585;&#1576;</button>
+            <button type="button" data-group-op="divide">&#1602;&#1587;&#1605;&#1577;</button>
+            <button type="button" data-group-op="average">&#1605;&#1578;&#1608;&#1587;&#1591;</button>
+          </div>
+          <div class="group-result" id="groupResult" hidden>
+            <span id="groupExpression"></span>
+            <strong id="groupValue"></strong>
+            <button id="useGroupResult" type="button">&#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605; &#1603;&#1606;&#1578;&#1610;&#1580;&#1577; &#1580;&#1583;&#1610;&#1583;&#1577;</button>
+          </div>
+        </section>
+      </aside>
+
+      <section class="panel calculator-panel" id="calculator" aria-label="&#1575;&#1604;&#1581;&#1575;&#1587;&#1576;&#1577;">
+        <div class="pinned-strip" id="pinnedStrip" aria-label="&#1575;&#1604;&#1606;&#1578;&#1575;&#1574;&#1580; &#1575;&#1604;&#1605;&#1579;&#1576;&#1578;&#1577;"></div>
+        <div class="display-card">
+          <div class="expression-display" id="expressionDisplay" aria-live="polite">0</div>
+          <div class="answer-row">
+            <span class="answer-label" id="currentLabel">--</span>
+            <strong class="answer-value" id="answerDisplay">0</strong>
+          </div>
+          <div class="error-message" id="errorMessage" role="status" aria-live="polite"></div>
+          <div class="display-actions">
+            <button id="copyResult" type="button">&#1606;&#1587;&#1582; &#1575;&#1604;&#1606;&#1575;&#1578;&#1580;</button>
+            <button id="pasteValue" type="button">&#1604;&#1589;&#1602;</button>
+            <button id="newOperation" type="button">&#1593;&#1605;&#1604;&#1610;&#1577; &#1580;&#1583;&#1610;&#1583;&#1577;</button>
+          </div>
+        </div>
+
+        <div class="keypad" id="keypad" aria-label="&#1604;&#1608;&#1581;&#1577; &#1571;&#1586;&#1585;&#1575;&#1585; &#1575;&#1604;&#1581;&#1575;&#1587;&#1576;&#1577;">
+          <button data-action="clear" class="danger-key">C</button>
+          <button data-action="backspace">&#9003;</button>
+          <button data-token="%" class="operator-key">%</button>
+          <button data-token="/" class="operator-key">&#247;</button>
+          <button data-token="7">7</button><button data-token="8">8</button><button data-token="9">9</button><button data-token="*" class="operator-key">&#215;</button>
+          <button data-token="4">4</button><button data-token="5">5</button><button data-token="6">6</button><button data-token="-" class="operator-key">&#8722;</button>
+          <button data-token="1">1</button><button data-token="2">2</button><button data-token="3">3</button><button data-token="+" class="operator-key">+</button>
+          <button data-token="(">(</button><button data-token="0">0</button><button data-token=".">.</button><button data-token=")">)</button>
+          <button data-action="undo">&#8630;</button><button data-action="redo">&#8631;</button><button data-action="paste">&#1604;&#1589;&#1602;</button><button data-action="equals" class="equals-key">=</button>
+        </div>
+
+        <details class="settings-panel">
+          <summary>&#1573;&#1593;&#1583;&#1575;&#1583;&#1575;&#1578; &#1575;&#1604;&#1593;&#1585;&#1590; &#1608;&#1575;&#1604;&#1589;&#1608;&#1578;</summary>
+          <div class="settings-grid">
+            <label>&#1575;&#1604;&#1605;&#1606;&#1575;&#1586;&#1604; &#1575;&#1604;&#1593;&#1588;&#1585;&#1610;&#1577;
+              <select id="decimalMode">
+                <option value="auto">&#1578;&#1604;&#1602;&#1575;&#1574;&#1610;</option>
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="6">6</option>
+              </select>
+            </label>
+            <label><input id="soundNumbers" type="checkbox" checked> &#1589;&#1608;&#1578; &#1575;&#1604;&#1571;&#1585;&#1602;&#1575;&#1605;</label>
+            <label><input id="soundOperators" type="checkbox" checked> &#1589;&#1608;&#1578; &#1575;&#1604;&#1593;&#1605;&#1604;&#1610;&#1575;&#1578;</label>
+            <label><input id="soundEquals" type="checkbox" checked> &#1589;&#1608;&#1578; &#1610;&#1587;&#1575;&#1608;&#1610;</label>
+          </div>
+        </details>
+      </section>
+
+      <aside class="panel history-panel details-panel" aria-label="&#1587;&#1580;&#1604; &#1575;&#1604;&#1593;&#1605;&#1604;&#1610;&#1575;&#1578;">
+        <div class="panel-heading">
+          <div><h2>&#1587;&#1580;&#1604; &#1575;&#1604;&#1593;&#1605;&#1604;&#1610;&#1575;&#1578;</h2><span id="historyCount">0</span></div>
+          <button id="clearHistory" type="button">&#1605;&#1587;&#1581;</button>
+        </div>
+        <div class="history-nav" id="historyNav">
+          <button id="historyUp" type="button" aria-label="&#1578;&#1605;&#1585;&#1610;&#1585; &#1604;&#1571;&#1593;&#1604;&#1609;">&#9650;</button>
+          <button id="historyDown" type="button" aria-label="&#1578;&#1605;&#1585;&#1610;&#1585; &#1604;&#1571;&#1587;&#1601;&#1604;">&#9660;</button>
+        </div>
+        <div class="history-list" id="historyList"></div>
+      </aside>
+    </main>
+
+    <footer class="shortcut-bar">
+      <span>Enter =</span><span>Backspace</span><span>Esc</span><span>Ctrl+C</span><span>Ctrl+V</span><span>Ctrl+Z</span><span>Ctrl+Y</span>
+    </footer>
+  </div>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
