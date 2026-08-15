@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rasid-calculator-v3';
+const CACHE_NAME = 'rasid-calculator-v4';
 const ASSETS = [
   './',
   './index.html',
