@@ -154,7 +154,7 @@ function tone(kind) {
   const gain = audioContext.createGain();
   const freq = kind === 'number' ? 390 : kind === 'operator' ? 520 : 690;
   osc.frequency.value = freq;
-  gain.gain.setValueAtTime(0.035, audioContext.currentTime);
+  gain.gain.setValueAtTime(0.08, audioContext.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.055);
   osc.connect(gain); gain.connect(audioContext.destination); osc.start(); osc.stop(audioContext.currentTime + 0.06);
 }
